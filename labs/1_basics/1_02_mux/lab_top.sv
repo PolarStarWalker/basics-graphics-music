@@ -145,7 +145,7 @@ module lab_top
 	 wire [0:7] table5_2 =
     {
         1'b0, // sel = 0, a = 0, b = 0 000
-		  1'b0, // sel = 1, a = 0, b = 0 001
+        1'b0, // sel = 1, a = 0, b = 0 001
 		  1'b1, // sel = 0, a = 0, b = 1 010
 		  1'b0, // sel = 1, a = 0, b = 1 011
 		  1'b0, // sel = 0, a = 1, b = 0 100
