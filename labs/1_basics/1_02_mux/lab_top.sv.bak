@@ -124,7 +124,7 @@ module lab_top
     // without using "?" operation, "if", "case" or a bit selection.
     // Use only operations "&", "|", "~" and parenthesis, "(" and ")".
 
-    wire mux4 = (sel & a) | ((~sel) & b);
+    wire mux4 = 1'b0;
 
     //------------------------------------------------------------------------
 
@@ -141,23 +141,11 @@ module lab_top
         1'b1, // sel = 1, a = 1, b = 0
         1'b1  // sel = 1, a = 1, b = 1
     };
-	 
-	 wire [0:7] table5_2 =
-    {
-        1'b0, // sel = 0, a = 0, b = 0 000
-		  1'b0, // sel = 1, a = 0, b = 0 001
-		  1'b1, // sel = 0, a = 0, b = 1 010
-		  1'b0, // sel = 1, a = 0, b = 1 011
-		  1'b0, // sel = 0, a = 1, b = 0 100
-        1'b1, // sel = 1, a = 1, b = 0 101
-		  1'b1, // sel = 0, a = 1, b = 1 110
-        1'b1  // sel = 1, a = 1, b = 1 111
-    };
 
     wire mux5 = table5 [{ sel, a, b }];
 
     // Exercise 2: Change the table to get the correct result by doing
-    wire mux5_2 = table5_2 [{ a, b, sel }];
+    // wire mux5_2 = table5_2 [{ a, b, sel }];
 
     //------------------------------------------------------------------------
 
@@ -301,17 +289,17 @@ module lab_top
 
     // Use concatenation operation for all signals:
 
-    // wire [11:0] all_muxes
-    //    = { mux11 , mux10 , mux9 , mux8 ,
-    //        mux7  , mux6  , mux5 , mux4 ,
-    //        mux3  , mux2  , mux1 , mux0 };
+    wire [11:0] all_muxes
+        = { mux11 , mux10 , mux9 , mux8 ,
+            mux7  , mux6  , mux5 , mux4 ,
+            mux3  , mux2  , mux1 , mux0 };
 
-    // assign led = w_led' (all_muxes);
+    assign led = w_led' (all_muxes);
 
     // Use concatenation operation for the boards with 4 LEDs:
 
-    //assign led = w_led' ({ mux3  , mux2  , mux1 , mux0 });
-    assign led = w_led' ({ mux6  , mux5_2  , mux4 , mux0 });
+    // assign led = w_led' ({ mux3  , mux2  , mux1 , mux0 });
+    // assign led = w_led' ({ mux6  , mux5  , mux4 , mux0 });
     // assign led = w_led' ({ mux9  , mux8  , mux7 , mux0 });
     // assign led = w_led' ({ mux11 , mux10 , mux4 , mux0 });
 
