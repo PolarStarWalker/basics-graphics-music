@@ -80,13 +80,32 @@ module lab_top
     localparam min_period = clk_mhz * 1000 * 1000 / 50,
                max_period = clk_mhz * 1000 * 1000 *  3;
 
+    wire one_key = key[0];
+    wire two_key = key[1];
+
+    logic one_key_r;
+    logic two_key_r;
+
+    always_ff @ (posedge clk or posedge rst)
+        if (rst) begin
+            one_key_r <= '0;
+            two_key_r <= '0;
+        end
+        else begin
+            one_key_r <= one_key;
+            two_key_r <= two_key;
+        end
+
+    wire one_key_pressed = ~one_key & one_key_r;
+    wire two_key_pressed = ~two_key & two_key_r;
+
     always_ff @ (posedge clk or posedge rst)
         if (rst)
             period <= 32' ((min_period + max_period) / 2);
-        else if (key [0] & period != max_period)
-            period <= period + 32'h1;
-        else if (key [1] & period != min_period)
-            period <= period - 32'h1;
+        else if (one_key_pressed & period != max_period)
+            period <= period * 2;
+        else if (two_key_pressed & period != min_period)
+            period <= period / 2;
 
     logic [31:0] cnt_1;
 
