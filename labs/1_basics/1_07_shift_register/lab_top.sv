@@ -88,9 +88,9 @@ module lab_top
 
     always_ff @ (posedge clk or posedge rst)
         if (rst)
-            shift_reg <= '1;
+            shift_reg <= 'd0101;
         else if (enable)
-            shift_reg <= { button_on, shift_reg [w_led - 1:1] };
+            shift_reg <= { shift_reg[0], shift_reg [3], shift_reg [2], shift_reg [1] };
 
     assign led = shift_reg;
 
